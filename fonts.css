@@ -1,0 +1,43 @@
+/* ------------------ FONTS ------------------ */
+/* Neue Haas Grotesk Display */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('assets/fonts/NeueHaasGrotDisp-55Roman-Web.woff2') format('woff2'),
+       url('assets/fonts/NeueHaasGrotDisp-55Roman-Web.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('assets/fonts/NeueHaasGrotDisp-56Italic-Web.woff2') format('woff2'),
+       url('assets/fonts/NeueHaasGrotDisp-56Italic-Web.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('assets/fonts/NeueHaasGrotDisp-65Medium-Web.woff2') format('woff2'),
+       url('assets/fonts/NeueHaasGrotDisp-65Medium-Web.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('assets/fonts/NeueHaasGrotDisp-75Bold-Web.woff2') format('woff2'),
+       url('assets/fonts/NeueHaasGrotDisp-75Bold-Web.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* September Spirit (escritura a mano, para el reverso de la postal) */
+@font-face {
+  font-family: 'September Spirit';
+  src: url('assets/fonts/SeptemberSpirit.woff2') format('woff2'),
+       url('assets/fonts/SeptemberSpirit.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

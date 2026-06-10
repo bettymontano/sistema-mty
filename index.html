@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sistema</title>
+
+  <link rel="icon" type="image/png" href="assets/img/favicon-moho.png">
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="intro">
+
+  <!------------------ PETRI DISH ------------------>
+  <div id="petri-wrap">
+    <div id="petri">
+      <div id="petri-bg"></div>
+      <div id="colony"></div>
+      <div id="petri-rim"></div>
+    </div>
+    <!-- Aro fuera de #petri (que recorta) para que pueda tener bleed más allá del círculo -->
+    <div id="petri-ring"></div>
+  </div>
+
+  <!------------------ NAV ------------------>
+  <header id="ui-top">
+    <a href="index.html" class="ui-logo-link" aria-label="sistema — inicio">
+      <img id="ui-logo" src="assets/img/sistemalogo.svg" alt="sistema">
+    </a>
+    <nav id="ui-nav">
+      <a href="#" class="nav-link solo-desktop" data-acerca>Acerca</a>
+      <a href="#" class="nav-link solo-desktop" data-contacto>Contacto</a>
+      <button class="btn btn-ghost solo-desktop" type="button" data-pick-date>Elegir otra fecha</button>
+
+      <!-- Menú desplegable para tablet y celular (escondido en desktop) -->
+      <div class="ui-menu-wrap solo-mobile">
+        <a href="#" class="nav-link" id="ui-menu" role="button" aria-haspopup="true" aria-expanded="false">Menú</a>
+        <div class="ui-menu-panel" hidden>
+          <a href="#" class="nav-link" data-acerca>Acerca</a>
+          <a href="#" class="nav-link" data-contacto>Contacto</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!------------------ COPY ------------------>
+  <main id="editorial">
+    <h1 class="ed-title">
+      <span class="t-fill">2024: Un año de aire en Monterrey.</span>
+      <span class="t-muted">Lo que crece aquí es el aire que respiramos.</span>
+    </h1>
+
+    <p class="ed-lede">Lo que se ve aquí es una representación visual (en forma de moho) del
+      nivel de contaminación del aire que hubo en Monterrey el mismo día que hoy, hace dos
+      años. 2024 fue el año en que la ciudad apareció entre las más contaminadas de Latinoamérica.</p>
+
+    <!-- Datos del día que remplazan el postit en versiones tablet y celular -->
+    <div class="ed-dato">
+      <p class="ed-dato-fecha">Día en cultivo: <span class="js-fecha"></span></p>
+      <p class="ed-dato-num"><span class="js-num"></span><span class="ed-dato-unit"> µg/m³ PM2.5</span></p>
+      <button class="btn btn-ghost ed-dato-btn" type="button" data-pick-date>Elegir otra fecha</button>
+    </div>
+
+    <!-- Copy para la postal de "Acerca":
+    <div class="ed-text">
+      <p>Cada plato de Petri es un día del año 2024 en Monterrey. Lo que ves crecer no es vida: es la huella de las partículas PM2.5, lo bastante finas para alojarse en los pulmones.</p>
+      <p>Entre más contaminado fue el día, más moho tóxico brota en el cultivo y más oscuro se vuelve el medio. Los días limpios apenas germinan; los críticos lo llenan por completo.</p>
+      <p>En 2024, 8 de cada 10 días el aire de Monterrey superó lo recomendado. Este sistema convierte ese dato invisible en algo que puede mirarse crecer.</p>
+    </div>
+    -->
+  </main>
+
+  <!------------------ PORTAOBJETOS (microscopio) ------------------>
+  <div id="slides" aria-hidden="true">
+    <img src="assets/img/microscope-slides.png" alt="">
+  </div>
+
+  <!------------------ CUADERNO ------------------>
+  <div id="cuaderno" aria-hidden="true">
+    <img src="assets/img/cuaderno3.png" alt="">
+  </div>
+
+  <!-- POST-IT -->
+  <div id="postit">
+    <img class="pf pf-1" src="assets/img/postit1.png" alt="">
+    <img class="pf pf-2" src="assets/img/postit2.png" alt="">
+    <img class="pf pf-3" src="assets/img/postit3.png" alt="">
+
+    <!-- UI del "día en cultivo", montada sobre el post-it (hereda su rotación) -->
+    <div class="postit-ui">
+      <p class="pu-fecha"><span class="pu-label">Día en cultivo:</span> <span class="js-fecha"></span></p>
+      <p class="pu-num"><span class="js-num"></span></p>
+      <p class="pu-unit">µg/m³ PM2.5 <span class="pu-info-wrap">
+        <button class="pu-info" type="button" aria-label="¿Qué es PM2.5?">i</button>
+        <span class="pu-tip" role="tooltip">PM2.5: partículas del aire tan pequeñas que pueden entrar a los pulmones.</span>
+      </span></p>
+      <button class="btn btn-ghost pu-btn" type="button" data-pick-date>Elegir otra fecha</button>
+    </div>
+  </div>
+
+  <!------------------ LAPICERO ------------------>
+  <div id="lapicero" aria-hidden="true">
+    <img src="assets/img/lapicero.png" alt="">
+  </div>
+
+  <!------------------ FOOTER ------------------>
+  <footer id="ui-footer">
+    <span>con datos de SINAICA y SIMA</span>
+  </footer>
+
+  <!------------------ ACERCA: postal de Monterrey que se voltea ------------------>
+  <div id="acerca-overlay" hidden></div>
+
+  <!-- Postal flip-card: frente = Cerro de la Silla (postal_f), reverso = postal_b
+       con el texto escrito "a mano" (font September Spirit) sobre las líneas. Al abrir,
+       aparece el frente y luego se voltea para revelar el reverso. -->
+  <div id="postal" hidden role="dialog" aria-modal="true" aria-label="Acerca del proyecto">
+    <div class="postal-inner">
+      <div class="postal-face postal-front">
+        <img src="assets/img/postal_f.png" alt="Postal de Monterrey: el Cerro de la Silla en risografía">
+      </div>
+      <div class="postal-face postal-back">
+        <img src="assets/img/postal_b.png" alt="">
+        <div class="postal-text">
+          <p>En Monterrey la mala calidad del aire ya es parte del paisaje, pero es difícil dimensionar lo grave de la situación.</p>
+          <p>Este proyecto lo deja ver... y crecer. Cada plato de Petri es un día de 2024: las partículas PM2.5 que hubo en el aire (esas que se cuelan hasta los pulmones) convertidas en colonias de moho. Mientras más sucio estuvo el día, más se llena el cultivo.</p>
+          <p>Datos reales de SINAICA y SIMA, hechos algo que da un poco de asco mirar. Como debería.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!------------------ CALENDARIO (selector de fecha, solo 2024) ------------------>
+  <div id="cal" class="cal" hidden role="dialog" aria-label="Elegir fecha de 2024">
+    <div class="cal-head">
+      <span class="cal-month"><span id="cal-title">Junio 2024</span></span>
+      <div class="cal-nav">
+        <button class="cal-prev" type="button" aria-label="Mes anterior">‹</button>
+        <button class="cal-next" type="button" aria-label="Mes siguiente">›</button>
+      </div>
+    </div>
+    <div class="cal-grid cal-dow" aria-hidden="true">
+      <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+    </div>
+    <div class="cal-grid cal-days" id="cal-days"></div>
+    <div class="cal-foot">
+      <button class="cal-clear" type="button">Borrar</button>
+      <button class="cal-today" type="button">Hoy</button>
+    </div>
+  </div>
+
+  <!------------------ CONTACTO: overlay con formulario ------------------>
+  <div id="contacto" hidden role="dialog" aria-modal="true" aria-label="Contacto">
+    <div class="contacto-card">
+      <button type="button" class="contacto-x" aria-label="Cerrar">×</button>
+
+      <form class="contacto-form">
+        <h2 class="contacto-title">¿Dudas sobre sistema?</h2>
+        <p class="contacto-sub">Déjanos tu mensaje.</p>
+        <input type="text" name="nombre" placeholder="Nombre" aria-label="Nombre" autocomplete="name" required>
+        <input type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required>
+        <textarea name="mensaje" placeholder="Mensaje" aria-label="Mensaje" rows="4" required></textarea>
+        <button type="submit" class="contacto-enviar">Enviar</button>
+      </form>
+
+      <div class="contacto-ok" hidden>
+        <h2 class="contacto-title">¡Gracias!</h2>
+        <p class="contacto-sub">Tu mensaje quedó listo. Te respondemos pronto.</p>
+        <button type="button" class="contacto-enviar contacto-cerrar">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
