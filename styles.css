@@ -37,9 +37,6 @@ html, body {
 }
 
 body {
-  /* Fijo la página al viewport para matar el "scroll fantasma" de iOS Safari:
-     como el petri sobresale por abajo, iOS dejaba desplazar la página y se
-     recorría el header/título hacia arriba. Con position:fixed queda anclada. */
   position: fixed;
   inset: 0;
   overflow: hidden;
@@ -117,10 +114,10 @@ body {
 /* ------------------ PETRI DISH ------------------ */
 #petri-wrap {
   position: absolute;
-  right: calc(2vw + 70px); 
-  bottom: -16vh; 
-  width: clamp(360px, min(82vh, 46vw), 880px); /*clamps me ayudan al acomodo de todo responsive */
-  height: clamp(360px, min(82vh, 46vw), 880px);
+  right: calc(2vw + 80px);
+  bottom: -13vh;
+  width: clamp(360px, min(76vh, 42vw), 700px); /*clamps me ayudan al acomodo de todo responsive*/
+  height: clamp(360px, min(76vh, 42vw), 700px);
   z-index: 1;
 }
 
@@ -196,9 +193,6 @@ body {
 #petri-ring {
   position: absolute;
   inset: -8%; /* para que se salga de las orillitas del círculo */
-  /* La imagen del aro ya trae el fondo negro en transparente (alpha), así que se
-     pinta directo: sin máscara de luminancia ni mix-blend-mode, que en iOS Safari
-     fallaban y dejaban un cuadro negro alrededor del petri. */
   background: url('assets/img/petri-dish-alpha.png') center / 100% 100% no-repeat;
   pointer-events: none;
 }
@@ -292,7 +286,7 @@ body {
 #editorial {
   position: relative;
   z-index: 2;
-  padding: 54px 34px 0;
+  padding: 26px 40px 0;   /* menos padding arriba: aprovecho el espacio del header */
   pointer-events: none;
 }
 
@@ -302,11 +296,11 @@ body {
 .ed-title {
   font-family: var(--font);
   font-weight: 500;
-  font-size: clamp(34px, 4.6vw, 82px);
-  line-height: 1.0;
+  font-size: clamp(34px, 3.4vw, 64px);   /* base 1920: ~64px, más proporcionado */
+  line-height: 1.02;
   letter-spacing: -0.025em;
-  margin: 22px 0 26px;
-  max-width: 19ch;
+  margin: 14px 0 20px;
+  max-width: 20ch;
 }
 .ed-title .t-fill  { color: var(--offwhite); }
 .ed-title .t-muted { color: var(--offwhite); }
@@ -315,12 +309,12 @@ body {
 .ed-lede {
   font-family: var(--font);
   font-weight: 400;
-  font-size: clamp(12.5px, 1.05vw, 15px);
+  font-size: clamp(12.5px, 0.92vw, 16px);
   line-height: 1.5;
   letter-spacing: 0;
   color: var(--offwhite);
-  max-width: 46ch;
-  margin-top: -12px;
+  max-width: 44ch;
+  margin-top: -6px;
 }
 
 /* para cuando estamos en móvil y tablet */
@@ -412,22 +406,20 @@ body {
 /* ------------------ PORTAOBJETOS (microscopio) ------------------ */
 #slides {
   position: fixed;
-  top: 20vh;
-  right: -3vw;
-  width: clamp(300px, 32vw, 480px);
+  top: 12vh;
+  right: -1vw;
+  width: clamp(280px, 24vw, 420px);
   z-index: 2;
   transform: rotate(-4deg);
   pointer-events: none;
 }
-#slides img { width: 100%; height: auto; display: block; }
+#slides img { width: 100%; height: auto; display: block; aspect-ratio: 2816 / 1536; }
 
 /* ------------------ CUADERNO (objeto, abajo-izquierda) ------------------ */
 #cuaderno {
   position: fixed;
   left: calc(-5vw - 30px);
-  bottom: -16vh;   /* más bleed por abajo para que no suba a tapar el copy */
-  /* tope por ancho Y por altura: en pantallas chaparras encoge para no subir
-     tanto y tapar el lede; en pantallas altas mandan el 46vw / 880px */
+  bottom: -11vh;
   width: clamp(440px, min(46vw, 85vh), 880px);
   z-index: 1;
   pointer-events: none;
@@ -437,6 +429,7 @@ body {
   width: 100%;
   height: auto;
   display: block;
+  aspect-ratio: 1792 / 1277;   /* alto conocido sin esperar la imagen (para medir el layout al inicio) */
 }
 
 /* ------------------ POST-IT ------------------ */
@@ -465,8 +458,7 @@ body {
   opacity: 1;
 }
 
-/* UI del "día en cultivo" sobre el post-it. Hereda la rotación del
-   #postit, así que va inclinada igual que la nota. */
+/* UI del "día en cultivo" sobre el post-it. Hereda la rotación del postit, así que va inclinada igual que la nota. */
 .postit-ui {
   position: absolute;
   inset: 0;
@@ -585,14 +577,14 @@ body {
 #lapicero {
   position: fixed;
   left: 28%;
-  bottom: -12vh;
+  bottom: -14vh;   /* un poco más abajo */
   width: clamp(190px, 17.25vw, 310px);
   z-index: 2;
   pointer-events: none;
   transform: rotate(-12deg);
 }
 
-#lapicero img { width: 100%; height: auto; display: block; }
+#lapicero img { width: 100%; height: auto; display: block; aspect-ratio: 1207 / 2753; }
 
 /* ------------------ CALENDARIO (selector propio, solo 2024) ------------------ */
 .cal {
@@ -903,13 +895,26 @@ body {
   to   { opacity: 1; translate: 0 0;         rotate: 0deg; }
 }
 @keyframes entra-abajo {
-  from { opacity: 0; translate: 0 85vh;      rotate: 8deg; }
+  from { opacity: 0; translate: 0 55vh;      rotate: 8deg; }
   to   { opacity: 1; translate: 0 0;         rotate: 0deg; }
 }
 @keyframes entra-texto {
   from { opacity: 0; translate: 0 1.1em; }
   to   { opacity: 1; translate: 0 0; }
 }
+
+/* Para medir los espacios que van a ocupar cada elemento en el tamaño exacto de la pantalla anetes de animarlos */
+body.intro-pendiente #petri-wrap,
+body.intro-pendiente #cuaderno,
+body.intro-pendiente #postit,
+body.intro-pendiente #slides,
+body.intro-pendiente #lapicero,
+body.intro-pendiente .ui-logo-link,
+body.intro-pendiente #ui-nav,
+body.intro-pendiente .ed-title,
+body.intro-pendiente .ed-lede,
+body.intro-pendiente .ed-dato,
+body.intro-pendiente #ui-footer { opacity: 0; }
 
 /* Objetos: cada uno desde su orilla, escalonados */
 body.intro #petri-wrap { animation: entra-abajo 0.9s  steps(8) both; }
@@ -948,7 +953,6 @@ body.intro #ui-footer    { animation: entra-texto 0.5s steps(4) both 0.62s; }
   #editorial { padding: 26px 24px 0; }
   /* título más grande y en  aprox 3 líneas, ocupando aprox 2/3 del ancho (no toda la pantalla) */
   .ed-title { font-size: clamp(38px, 5.6vw, 52px); max-width: 20ch; }
-  /* En iPad/móvil quitamos el post-it (estorbaba) y mostramos sus datos en línea (crema), para ganar espacio y que el párrafo de contexto siga visible. */
   #postit { display: none; }
   .ed-lede { display: block; margin-top: 6px; }
   .ed-dato { display: flex; }

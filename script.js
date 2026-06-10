@@ -771,7 +771,6 @@ function rectChocaCirculo(rect, c, m = 0) {
 }
 
 function gestionarEmpalmes() {
-
   if (document.body.classList.contains('intro')) return;
 
   const ocultables = SEL_OCULTABLES
@@ -780,17 +779,16 @@ function gestionarEmpalmes() {
   ocultables.forEach(el => el.classList.remove('oculto-colision'));
   if (mqStack.matches) return;
 
-  requestAnimationFrame(() => {
-    const anclas = SEL_ANCLAS_RECT.map(s => rectDe(s)).filter(Boolean);
-    const petri = circuloPetri();
-    for (const sel of SEL_OCULTABLES) {
-      const c = rectDe(sel);
-      if (!c) continue;
-      const choca = anclas.some(a => seEmpalman(a, c, MARGEN_COLISION)) ||
-                    (petri && rectChocaCirculo(c, petri, MARGEN_COLISION));
-      document.querySelector(sel)?.classList.toggle('oculto-colision', choca);
-    }
-  });
+  // Mido síncrono (getBoundingClientRect ya fuerza el reflow tras mostrarlos).
+  const anclas = SEL_ANCLAS_RECT.map(s => rectDe(s)).filter(Boolean);
+  const petri = circuloPetri();
+  for (const sel of SEL_OCULTABLES) {
+    const c = rectDe(sel);
+    if (!c) continue;
+    const choca = anclas.some(a => seEmpalman(a, c, MARGEN_COLISION)) ||
+                  (petri && rectChocaCirculo(c, petri, MARGEN_COLISION));
+    document.querySelector(sel)?.classList.toggle('oculto-colision', choca);
+  }
 }
 
 // En formato vertical el petri es prioridad 1 y va anclado para que los demas elemnetos se adapten a él
@@ -826,14 +824,13 @@ function setupLayout() {
   run();
 }
 
-// Le quito la clase .intro cuando termina la entrada de los elementos
+// Llama la función de la entrada DESPUÉS de que el layout ya se decidió en reposo
 function setupIntro() {
-  if (!document.body.classList.contains('intro')) return;
-  setTimeout(() => {
-    document.body.classList.remove('intro');
-    gestionarEmpalmes();
-    ajustarPetriStack();
-  }, 1700);
+  if (!document.body.classList.contains('intro-pendiente')) return;
+  document.body.classList.remove('intro-pendiente');
+  document.body.classList.add('intro');
+  // El layout ya quedó decidido al inicio quito la clase
+  setTimeout(() => document.body.classList.remove('intro'), 1700);
 }
 
 // ---------------- 7) INIT ----------------
@@ -856,7 +853,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupTip();
   setupAcerca();
   setupContacto();
-  setupLayout();
-  setupIntro();
-  render(getDatoDeHoy());
+  render(getDatoDeHoy());   // lleno los datos ANTES de medir (para empujar bien el petri)
+
+  // Esperamos a que carguen las FUENTES antes de medir: si mide con la fuente de respaldo, el título tiene otro tamaño, y al cargar la real cambiaría y la colisión decidiría distinto
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+
+  setupLayout();            // mide en reposo (.intro-pendiente): oculta lo que sobra + empuja el petri
+  setupIntro();             // recién aquí dispara la entrada, ya con el layout decidido
 });
