@@ -425,8 +425,10 @@ body {
 #cuaderno {
   position: fixed;
   left: calc(-5vw - 30px);
-  bottom: -10vh;
-  width: clamp(480px, 54vw, 1040px);
+  bottom: -16vh;   /* más bleed por abajo para que no suba a tapar el copy */
+  /* tope por ancho Y por altura: en pantallas chaparras encoge para no subir
+     tanto y tapar el lede; en pantallas altas mandan el 46vw / 880px */
+  width: clamp(440px, min(46vw, 85vh), 880px);
   z-index: 1;
   pointer-events: none;
 }
@@ -440,8 +442,8 @@ body {
 /* ------------------ POST-IT ------------------ */
 #postit {
   position: fixed;
-  left: 8%;
-  bottom: 12%;
+  left: 7%;
+  bottom: 8%;   /* más abajo, junto con el cuaderno, para no tapar el copy */
   width: clamp(240px, 17.6vw, 336px);   /* aprox 80% */
   aspect-ratio: 768 / 772;
   z-index: 2;
