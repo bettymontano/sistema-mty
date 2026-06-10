@@ -192,15 +192,10 @@ body {
 #petri-ring {
   position: absolute;
   inset: -8%; /* para que se salga de las orillitas del círculo */
-  background: url('assets/img/petri-dish.png') center / 100% 100% no-repeat;
-
-  /* máscara para quitarle el fondo negro */
-  -webkit-mask: url('assets/img/petri-dish.png') center / 100% 100% no-repeat;
-          mask: url('assets/img/petri-dish.png') center / 100% 100% no-repeat;
-  -webkit-mask-source-type: luminance; 
-          mask-mode: luminance; 
-
-  mix-blend-mode: screen;
+  /* La imagen del aro ya trae el fondo negro en transparente (alpha), así que se
+     pinta directo: sin máscara de luminancia ni mix-blend-mode, que en iOS Safari
+     fallaban y dejaban un cuadro negro alrededor del petri. */
+  background: url('assets/img/petri-dish-alpha.png') center / 100% 100% no-repeat;
   pointer-events: none;
 }
 
