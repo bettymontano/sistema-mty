@@ -38,7 +38,8 @@ html, body {
 
 body {
   position: relative;
-  height: 100vh;
+  height: 100vh;    /* respaldo para navegadores viejos */
+  height: 100dvh;   /* dvh respeta la barra de iOS Safari: el contenido no se corta ni se recorre */
 }
 
 /* Para visibilidad por viewport (el detalle responsive más abajo) */
@@ -952,9 +953,9 @@ body.intro #ui-footer    { animation: entra-texto 0.5s steps(4) both 0.62s; }
     right: auto;
     left: 50%;
     transform: translateX(-50%);
-    width: min(92vw, 80vh, 660px);
-    height: min(92vw, 80vh, 660px);
-    bottom: -14vh;
+    width: min(92vw, 80dvh, 660px);
+    height: min(92vw, 80dvh, 660px);
+    bottom: -14dvh;
   }
 
   /* sin libreta (vertical): el footer va centrado abajo, mismo gris oscuro */
@@ -976,9 +977,9 @@ body.intro #ui-footer    { animation: entra-texto 0.5s steps(4) both 0.62s; }
   .ed-title { font-size: clamp(30px, 9.5vw, 44px); max-width: none; margin: 4px 0 0; }
 
   #petri-wrap {
-    width: min(128vw, 92vh, 560px);
-    height: min(128vw, 92vh, 560px);
-    bottom: -24vh;
+    width: min(128vw, 92dvh, 560px);
+    height: min(128vw, 92dvh, 560px);
+    bottom: -24dvh;
   }
 
   #ui-footer { bottom: 12px; }
