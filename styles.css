@@ -37,9 +37,12 @@ html, body {
 }
 
 body {
-  position: relative;
-  height: 100vh;    /* respaldo para navegadores viejos */
-  height: 100dvh;   /* dvh respeta la barra de iOS Safari: el contenido no se corta ni se recorre */
+  /* Fijo la página al viewport para matar el "scroll fantasma" de iOS Safari:
+     como el petri sobresale por abajo, iOS dejaba desplazar la página y se
+     recorría el header/título hacia arriba. Con position:fixed queda anclada. */
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
 }
 
 /* Para visibilidad por viewport (el detalle responsive más abajo) */
